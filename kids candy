@@ -1,0 +1,25 @@
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    vector<bool> kidsWithCandies(vector<int>& candies, int extraCandies) {
+        // Find the maximum number of candies among all children
+        int maxCandies = *max_element(candies.begin(), candies.end());
+        
+        // Initialize a boolean vector to store the result
+        vector<bool> result;
+        
+        // Iterate through each child's candies count
+        for (int i = 0; i < candies.size(); ++i) {
+            // Check if the current child can have the greatest number of candies
+            if (candies[i] + extraCandies >= maxCandies) {
+                result.push_back(true);
+            } else {
+                result.push_back(false);
+            }
+        }
+        
+        return result;
+    }
+};
