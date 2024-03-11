@@ -1,0 +1,25 @@
+#include <vector>
+#include <cmath>
+
+class Solution {
+public:
+    int numSquares(int n) {
+        // Initialize a vector to store the least number of perfect squares needed to sum up to each number from 0 to n
+        std::vector<int> dp(n + 1, INT_MAX);
+
+        // Base case: 0 requires 0 perfect squares
+        dp[0] = 0;
+
+        // Iterate through numbers from 1 to n
+        for (int i = 1; i <= n; ++i) {
+            // Iterate through perfect squares less than or equal to i
+            for (int j = 1; j * j <= i; ++j) {
+                // Update dp[i] if the current number of perfect squares is less than the current value
+                dp[i] = std::min(dp[i], dp[i - j * j] + 1);
+            }
+        }
+
+        // Return the least number of perfect squares needed to sum up to n
+        return dp[n];
+    }
+};
