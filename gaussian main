@@ -1,0 +1,67 @@
+#include <iostream>
+#include <fstream>
+#include "gaussian_elimination.hpp"
+
+Matrix readMatrixFromFile(const std::string& filename) {
+    Matrix matrix;
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << filename << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    double num;
+    while (file >> num) {
+        std::vector<double> row;
+        row.push_back(num);
+        for (size_t i = 1; i < matrix.size(); ++i) {
+            file >> num;
+            row.push_back(num);
+        }
+        matrix.push_back(row);
+    }
+    file.close();
+    return matrix;
+}
+
+void writeMatrixToFile(const Matrix& matrix, const std::string& filename) {
+    std::string outputPath = "./output.txt";
+    std::ofstream file(outputPath);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << outputPath << std::endl;
+        return;
+    }
+    for (const auto& row : matrix) {
+        for (const auto& element : row) {
+            file << element << "\t";
+        }
+        file << std::endl;
+    }
+    file.close();
+    if (file.fail()) {
+        std::cerr << "Error writing to file: " << outputPath << std::endl;
+    } else {
+        std::cout << "Output written to file: " << outputPath << std::endl;
+    }
+}
+
+int main() {
+    // Read matrix from input file
+    Matrix matrix = readMatrixFromFile("L_49_49.txt");
+
+    // Print the matrix read from the file
+    std::cout << "Matrix read from file:" << std::endl;
+    printMatrix(matrix);
+
+    // Perform Gaussian elimination
+    GaussianElimination gaussianElimination;
+    Matrix result = gaussianElimination.solve(matrix);
+
+    // Print the resulting matrix after Gaussian elimination
+    std::cout << "\nResulting Matrix after Gaussian Elimination:" << std::endl;
+    printMatrix(result);
+
+    // Write result to output file
+    writeMatrixToFile(result, "output.txt");
+
+    return 0;
+}
