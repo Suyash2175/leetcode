@@ -1,0 +1,42 @@
+class Solution {
+public:
+    void gameOfLife(vector<vector<int>>& board) {
+        int m = board.size();
+        int n = board[0].size();
+        
+        // Define directions for neighbors (horizontal, vertical, diagonal)
+        vector<pair<int, int>> directions = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+        
+        // Loop through each cell
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                int liveNeighbors = 0;
+                
+                // Count live neighbors
+                for (auto& dir : directions) {
+                    int x = i + dir.first;
+                    int y = j + dir.second;
+                    
+                    if (x >= 0 && x < m && y >= 0 && y < n && (board[x][y] == 1 || board[x][y] == 2)) {
+                        liveNeighbors++;
+                    }
+                }
+                
+                // Apply rules to update state
+                if (board[i][j] == 1 && (liveNeighbors < 2 || liveNeighbors > 3)) {
+                    board[i][j] = 2; // mark as dead
+                }
+                if (board[i][j] == 0 && liveNeighbors == 3) {
+                    board[i][j] = 3; // mark as alive
+                }
+            }
+        }
+        
+        // Update board with next state
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                board[i][j] %= 2; // restore original state
+            }
+        }
+    }
+};
