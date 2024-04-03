@@ -1,0 +1,32 @@
+#include <vector>
+#include <unordered_set>
+
+using namespace std;
+
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        unordered_set<string> seen;
+        for (int i = 0; i < 9; ++i) {
+            for (int j = 0; j < 9; ++j) {
+                char current = board[i][j];
+                if (current != '.') {
+                    string row_val = "row" + to_string(i) + current;
+                    string col_val = "col" + to_string(j) + current;
+                    string box_val = "box" + to_string(i / 3) + to_string(j / 3) + current;
+                    
+                    if (seen.find(row_val) != seen.end() ||
+                        seen.find(col_val) != seen.end() ||
+                        seen.find(box_val) != seen.end()) {
+                        return false;
+                    }
+                    
+                    seen.insert(row_val);
+                    seen.insert(col_val);
+                    seen.insert(box_val);
+                }
+            }
+        }
+        return true;
+    }
+};
