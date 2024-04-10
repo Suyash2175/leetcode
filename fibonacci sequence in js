@@ -1,0 +1,13 @@
+function* fibGenerator() {
+    let [prev, current] = [0, 1];
+    for (let i = 0; i < callCount; i++) {
+        yield prev;
+        [prev, current] = [current, prev + current];
+    }
+}
+
+// Test case example
+const callCount = 5;
+const gen = fibGenerator(callCount);
+const result = Array.from(gen);
+console.log(result); // Output: [0, 1, 1, 2, 3]
