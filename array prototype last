@@ -1,0 +1,17 @@
+/**
+ * @return {null|boolean|number|string|Array|Object}
+ */
+Array.prototype.last = function() {
+    if (this.length === 0) {
+        return -1; // If the array is empty, return -1
+    } else {
+        return this[this.length - 1]; // Return the last element of the array
+    }
+};
+
+// Example usage:
+const arr1 = [null, {}, 3];
+console.log(arr1.last()); // Output: 3
+
+const arr2 = [];
+console.log(arr2.last()); // Output: -1
