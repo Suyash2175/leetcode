@@ -1,0 +1,17 @@
+/**
+ * @param {Array} arr
+ * @param {Function} fn
+ * @return {Array}
+ */
+var sortBy = function(arr, fn) {
+    // Use the built-in sort function and provide a custom comparator
+    return arr.sort((a, b) => {
+        // Evaluate the function on each element
+        const aValue = fn(a);
+        const bValue = fn(b);
+        // Compare the evaluated values and return the comparison result
+        if (aValue < bValue) return -1;
+        if (aValue > bValue) return 1;
+        return 0;
+    });
+};
