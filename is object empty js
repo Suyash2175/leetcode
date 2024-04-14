@@ -1,0 +1,12 @@
+/**
+ * @param {Object|Array} obj
+ * @return {boolean}
+ */
+var isEmpty = function(obj) {
+    // Serialize the object or array to a string
+    var jsonString = JSON.stringify(obj);
+    
+    // Check if the string length is 2, as an empty object or array
+    // will be represented as "{}" or "[]"
+    return jsonString.length === 2;
+};
